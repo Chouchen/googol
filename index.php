@@ -1,5 +1,13 @@
-<?php // !!!!!!!!!!!!!!!!!!!!!!!!!!!!! autres tailles link : http://images.google.fr/url?sa=t&rct=j&q=&source=imgres&cd=58&cad=rja&uact=8&ved=0ahUKEwiQ6vOamNrPAhUDsBQKHXlFA8E4ORCsEQgGMAA&url=%2Fsearch%3Fnum%3D10%26imgurl%3Dhttps%3A%2F%2Fleblavog.files.wordpress.com%2F2014%2F05%2Findex.jpg%26imgrefurl%3Dhttps%3A%2F%2Fleblavog.wordpress.com%2Ftag%2Flentourage%2F%26h%3D225%26w%3D225%26hl%3Dfr%26bih%3D734%26biw%3D1600%26tbm%3Disch%26tbnid%3DFKGG__DsUDIzgM%3A%26docid%3D7tGaFkl0KaQVFM%26tbs%3Dsimg%3Am00&usg=AFQjCNH3h84n-P9U5XuKv1_AxMz2W2Cj_A
+<?php 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!! autres tailles link : http://images.google.fr/url?sa=t&rct=j&q=&source=imgres&cd=58&cad=rja&uact=8&ved=0ahUKEwiQ6vOamNrPAhUDsBQKHXlFA8E4ORCsEQgGMAA&url=%2Fsearch%3Fnum%3D10%26imgurl%3Dhttps%3A%2F%2Fleblavog.files.wordpress.com%2F2014%2F05%2Findex.jpg%26imgrefurl%3Dhttps%3A%2F%2Fleblavog.wordpress.com%2Ftag%2Flentourage%2F%26h%3D225%26w%3D225%26hl%3Dfr%26bih%3D734%26biw%3D1600%26tbm%3Disch%26tbnid%3DFKGG__DsUDIzgM%3A%26docid%3D7tGaFkl0KaQVFM%26tbs%3Dsimg%3Am00&usg=AFQjCNH3h84n-P9U5XuKv1_AxMz2W2Cj_A
 	session_start();
+
+	define('SSL_MUTUALIZED',null);
+	if (SSL_MUTUALIZED != null && !isset($_SERVER['HTTP_SSL'])) {
+		header('location:https://'.SSL_MUTUALIZED.'/'.$_SERVER['HTTP_HOST'].'/'.(isset($_GET['q']) ? '?'.$_GET['q'] : ''));
+		exit();
+	}
+
 	if (isset($_GET['lang'])){$langue=strip_tags($_GET['lang']);}else{$langue=strip_tags(lang());}
 	clear_cache();// vire les thumbs de plus de trois minutes
 	define('LANGUAGE',$langue);
@@ -124,7 +132,7 @@
 		);
 	}
 	function protocolIsHTTPS() {
-	    return (!empty($_SERVER['HTTPS']) AND $_SERVER['HTTPS'] == 'on') ? true : false;
+	    return (!empty($_SERVER['HTTPS']) AND strtolower($_SERVER['HTTPS']) == 'on') ? true : ((!empty($_SERVER['HTTP_SSL']) AND strtolower($_SERVER['HTTP_SSL']) == 'on') ? true : false);
 	}
 	function checkSite(&$site, $reset=true) {
 	    $site = preg_replace('#([\'"].*)#', '', $site);
@@ -138,7 +146,7 @@
 	    }
 	}
 	function getRacine($truncate=false) {
-	    $protocol = protocolIsHTTPS() ? 'https://' : "http://";
+	    $protocol = protocolIsHTTPS() ? 'https://'.(SSL_MUTUALIZED != null ? SSL_MUTUALIZED.'/' : '') : "http://";
 	    $servername = $_SERVER['HTTP_HOST'];
 	    $serverport = (preg_match('/:[0-9]+/', $servername) OR $_SERVER['SERVER_PORT'])=='80' ? '' : ':'.$_SERVER['SERVER_PORT'];
 	    $dirname = preg_replace('/\/(core|plugins)\/(.*)/', '', dirname($_SERVER['SCRIPT_NAME']));
