@@ -13,6 +13,7 @@
 	define('LANGUAGE',$langue);
 	define('PAUSE_DURATION',60); // minutes
 	define('RACINE',getRacine());
+	define('OPEN_IN_NEW_TAB',true);
 	define('USE_WEB_OF_TRUST',true);
 	define('WOT_URL','http://www.mywot.com/scorecard/');
 	define('REGEX_WEB','#(?<=<h3 class="r"><a href="/url\?q=)([^&]+).*?>(.*?)</a>.*?(?<=<span class="st">)(.*?)(?=</span>)#s');
@@ -44,7 +45,7 @@
 	define('URLIMG','https://www.google.com/search?hl='.LANGUAGE.SAFESEARCH_LEVEL.'&source=hp&tbm=isch&q=');
 	define('URLVID','&tbm=vid');
 	define('VERSION','v2.2'); 
-	define('USE_GOOGLE_THUMBS',true);
+	define('USE_GOOGLE_THUMBS',false);
 	define('THEME','style_google.css');
 	$lang['fr']=array(
 		'previous'=>strip_tags('Page précédente'),
@@ -377,7 +378,7 @@
 			foreach ($array['links'] as $nb => $link){
 				
 		
-				$r=str_replace('#link',urldecode($link),TPL);
+				$r=str_replace('#link',urldecode($link).(OPEN_IN_NEW_TAB === true ? '" class="targetBlank' : ''),TPL);
 				$r=str_replace('#higlightedlink',highlight($q_txt,urldecode($link)),$r);
 				$r=str_replace('#title',highlight($q_txt,$array['titles'][$nb]),$r);
 				$d=str_replace('<br>','',$array['descriptions'][$nb]);
@@ -398,7 +399,7 @@
 			
 			foreach ($array['urlimg'] as $nb => $link){			
 		
-				$r=str_replace('#link',$link,TPLIMG);
+				$r=str_replace('#link',$link.(OPEN_IN_NEW_TAB === true ? '" class="targetBlank' : ''),TPLIMG);
 				$r=str_replace('#H',$array['h'][$nb],$r);
 				$r=str_replace('#W',$array['w'][$nb],$r);
 				$r=str_replace('#site',$array['site'][$nb],$r);
@@ -429,7 +430,7 @@
 				
 		
 				$array['description'][$nb]=link2YoutubeUser($array['description'][$nb],$link);
-				$r=str_replace('#link',$link,TPLVID);
+				$r=str_replace('#link',$link.(OPEN_IN_NEW_TAB === true ? '" class="targetBlank' : ''),TPLVID);
 				$r=str_replace('#titre',$array['titre'][$nb],$r);
 				$r=str_replace('#description',$array['description'][$nb],$r);
 				$r=str_replace('#site',$array['site'][$nb],$r);
@@ -681,7 +682,31 @@
 			content=list.innerHTML;
 			list.innerHTML=content+more;
 		}
+<?php if (OPEN_IN_NEW_TAB==true) :?>
+		var targetBlank = document.querySelectorAll('.targetBlank');
+		if (targetBlank != null) {
+		    var l = targetBlank.length;
+		    for (var i = 0; i < l; i++) {
+		        targetBlank[i].addEventListener('click', function(evt) { 
+		            evt.preventDefault(); 
+		            evt.returnValue = false; 
+		            if (this.href != undefined) {
+		                openNew(this.href);
+		            } else {
+		                openNew(this.dataset.set);
+		            }
+		        });
+		    }
+		}
+
+		function openNew(url) {
+		    var otherWindow = window.open();
+		    otherWindow.opener = null;
+		    otherWindow.location = url;
+		}
+<?php endif;?>
+
 	</script>
 </body>
 </html>
-<?php add_search_engine(); ?>
+<?php add_search_engine();
