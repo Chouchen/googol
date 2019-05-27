@@ -16,7 +16,7 @@
 	define('OPEN_IN_NEW_TAB',true);
 	define('USE_WEB_OF_TRUST',true);
 	define('WOT_URL','http://www.mywot.com/scorecard/');
-	define('REGEX_WEB','#(?<=<h3 class="r"><a href="/url\?q=)([^&]+).*?>(.*?)</a>.*?(?<=<span class="st">)(.*?)(?=</span>)#s');
+	define('REGEX_WEB','#<div.*?<a href="\/url\?q=([^&]+).*?"><div class=".*?">(.*?)<\/div>.*?<\/a><\/div><div.*?<div.*?<div.*?<div.*?<div.*?<div.*?<div.*?>(.*?)<\/div>#');
 	define('REGEX_PAGES','#&start=([0-9]+)|&start=([0-9]+)#');
 
 	define('REGEX_DATAIMG','#\["(?P<id>.*?)","data:image\/jpeg;base64(?P<dataimg>.*?)"\]#');
