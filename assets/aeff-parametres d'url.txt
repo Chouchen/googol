@@ -1,0 +1,42 @@
+https://www.google.fr/search?q=test&complete=0&tbs=qdr:y&tbas=0
+https://www.google.fr/search?q=test&complete=0&tbas=0
+
+
+&tbs=qdr:y = par pertinence
+&tbs=qdr:y,sbd:1 = par date
+
+&tbm=vid = videos
+
+
+
+
+DDG
+html/?kd=-1&q=query+sort:date
+curl 'https://duckduckgo.com/i.js?q=test&o=json&p=-1&s=50&u=yahoo&f=,,,&l=fr-fr&vqd=3-327144108810430472085834000143812190483-257771126350534465017284655038684709495' -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 Firefox/63.0' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Referer: https://duckduckgo.com/' -H 'X-Requested-With: XMLHttpRequest' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Cookie: ah=fr-fr%2Cmx-es; 5=1; l=fr-fr; ax=v142-7; p=-2' -H 'TE: Trailers'
+https://duckduckgo.com/i.js?q=test&o=json&p=-1&s=50&u=yahoo&f=,,,&l=fr-fr&vqd=3-327144108810430472085834000143812190483-257771126350534465017284655038684709495
+
+images:
+page0
+https://duckduckgo.com/i.js?l=fr-fr&o=json&q=test&vqd=3-327144066977960673703848795988100706051-257771126350534465017284655038684709495&f=,,,&p=-1
+
+page1  s=50
+https://duckduckgo.com/i.js?q=test&o=json&p=-1&s=50&u=yahoo&f=,,,&l=fr-fr&vqd=3-327144066977960673703848795988100706051-257771126350534465017284655038684709495
+
+puis s=100,150,200 etc
+
+
+
+web:
+https://duckduckgo.com/d.js?q=test&a=h_&t=D&l=fr-fr&p=-1&s=30&ex=-2&dl=en&ct=FR&ss_mkt=fr&sp=0&nextParams=Keywords%3Dtest%26xargs%3D12KPjg1slSrZquh831MeKMQeCUgRpd1tm59t0uXsYsfIwUpX9u6dFIEOacyZA6QO1xt77k%255FcDYpflNaKymwfaJExjXBRHcX726gZS7%255FYsrb%252DeWZZIezeZgn7Sy2tkTZXIFYk%252DBSQ%252E%252E%26hData%3D12KPjg1qdOxJy7tuqnF9W2SOaj8m4%252E&vqd=3-327144066977960673703848795988100706051-257771126350534465017284655038684709495
+
+videos
+https://duckduckgo.com/v.js?l=fr-fr&o=json&strict=1&q=test&vqd=3-327144066977960673703848795988100706051-257771126350534465017284655038684709495&f=,,,&p=-1
+
+
+f=size,,color
+images couleurs
+color2-FGcls_ORANGE/RED...
+color2-color/bw
+
+image tailles
+size:imagesize-medium/large/wallpaper
