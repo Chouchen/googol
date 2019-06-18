@@ -124,7 +124,6 @@ em.G {
         transform: scaleX(-1);
             display: inline-block;
 }
-}
 em.g {
     color: #4285F4;
     text-shadow: 0 1px 1px #4285F4;
@@ -316,7 +315,6 @@ input[type=text]:focus {
 }
 input[type=submit] {
     height: 38px;
-    width: 40px;
     font-size: 14px;
     border: 1px solid #4d90fe;
     width: 38px;
@@ -352,7 +350,6 @@ aside ul {
 }
 .result {
     background-color: #fff;
-    margin-bottom: 10px;
     box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
     border-radius: 8px;
     list-style: none;
@@ -531,7 +528,6 @@ div.video span {
     font-size: 18px!important;
     text-align: center;
     width: auto;
-    padding-top: 5px;
     margin-bottom: 25px;
     margin-top:25px;
     padding:15px;
