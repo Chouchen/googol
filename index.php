@@ -1,6 +1,7 @@
 <?php
 
 use Googol\Cache;
+use Googol\Engine\Duckduckgo;
 use Googol\Engine\Google;
 use Googol\Utils;
 
@@ -63,23 +64,22 @@ session_start();
 	#                                                                                     #
 	#######################################################################################
 	if (!isset($_SESSION['GOOGLE_VED'])) {
-		$_SESSION['GOOGLE_VED'] = getGoogleVed();
+		$_SESSION['GOOGLE_VED'] = Google::getGoogleVed();
 	}
 	define('VED',$_SESSION['GOOGLE_VED']);
 
 	if ($q_raw){
 		$google_page = Google::getGooglePage(QUERY_RAW);
 
-		if (Google::isBannished($google_page)){
+		if (Google::isBannished($google_page)) {
 			define('SOURCE','duckduckgo');
-			include 'assets/duckduckgo.php';
-			$data=getDdgData(START,MODE);
-		}else{
-			define('SOURCE','google');
-			if ($q_raw){
-				$data = Google::parsePage($google_page);
-			}
+			$data = Duckduckgo::getDdgData(START,MODE);
+		} else {
+            define('SOURCE','google');
+			$data = Google::parsePage($google_page);
 		}
+	} else {
+        define('SOURCE','google');
 	}
 
 ################################

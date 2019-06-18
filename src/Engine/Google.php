@@ -88,7 +88,7 @@ class Google extends Engine
         return (boolean)stripos($page, CAPCHA_DETECT);
     }
 
-    public function getGoogleVed()
+    public static function getGoogleVed()
     {
         preg_match('#data-ved="(?P<VED>[^"]+)"#', self::file_curl_contents(GOOGLE_ROOT), $ved);
         if (!empty($ved['VED'])) {
@@ -208,7 +208,6 @@ class Google extends Engine
 
     public static function render($data)
     {
-        $config = Utils::getConfig();
         if (!$data){ return;}
         echo '<ul start="'.START.'">';
         foreach ($data as $key => $item) {
