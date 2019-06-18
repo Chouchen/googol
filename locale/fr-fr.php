@@ -1,5 +1,5 @@
 	<?php 
-	$lang['FR-fr']=array(
+	$lang['FR-fr'] = [
 		'previous'=>'Page précédente',
 		'next'=>'Page suivante',
 		'Google banned this server for a while so we will use duckduckgo instead'=>'Google a banni ce serveur pour un moment, duckduckgo sera utilisé à la place',
@@ -40,4 +40,4 @@
 		'Medium'=>'Moyenne',
 		'Icon'=>'Petite',
 		'load more'=>'charger davantage',
-		);
+    ];

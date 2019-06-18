@@ -1,5 +1,6 @@
-	<?php 
-	$lang['fr']=array(
+	<?php
+
+	$lang['fr'] = [
 		'previous'=>'Page précédente',
 		'next'=>'Page suivante',
 		'Google has received too mutch requests from this IP, try again later or with another version af googol.'=>'Google a reçu trop de requêtes de cette IP et la bloque: essaie plus tard !',
@@ -36,4 +37,4 @@
 		'Medium'=>'Moyenne',
 		'Icon'=>'Petite',
 		'load more'=>'charger davantage',
-		);
+    ];
