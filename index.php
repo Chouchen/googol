@@ -180,6 +180,11 @@ session_start();
 							} else {
 								echo '<li><a href="?q='.urlencode($q_raw).'&mod=news&lang='.LANGUAGE.'">'.Utils::msg('News').'</a></li>';
 							}
+							if (MODE === 'map') {
+								echo '<li class="active">'.Utils::msg('Map').'</li>';
+							} else {
+								echo '<li><a href="'.GOOGLE_MAP.'/'.urlencode($q_raw).'">'.Utils::msg('Map').'</a></li>';
+							}
 							Utils::alternatesMotors($q_txt);
 						?>
 					</nav>

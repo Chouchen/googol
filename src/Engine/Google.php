@@ -124,6 +124,9 @@ class Google extends Engine
             $url = sprintf('%s%s%s%s&start=%s&num=100', GOOGLE_ROOT, GOOGLE_IMG, $query, $f, START);
         } elseif (MODE === 'videos') {
             $url = sprintf('%s%s%s&start=%s', GOOGLE_ROOT, GOOGLE_VID, $query, START);
+        } elseif (MODE === 'map') {
+            $url = sprintf('%s/%s', GOOGLE_MAP, urlencode($query));
+            header('Location:'.$url);
         }
         $url .= '&ved='.$_SESSION['GOOGLE_VED'];
         $content = self::file_curl_contents($url,false);
@@ -269,6 +272,9 @@ class Google extends Engine
                 }
                 $link = (string)$a->attributes->item(0)->nodeValue;
                 preg_match('#^\/url\?q=([^&]+).*$#', $link, $r);
+                if (!isset($r[1])) {
+                    continue;
+                }
                 $links[] = $r[1];
                 $a_children = $a->childNodes;
                 $titles[] = $a_children->item(0)->textContent;

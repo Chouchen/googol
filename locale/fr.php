@@ -37,4 +37,5 @@
 		'Medium'=>'Moyenne',
 		'Icon'=>'Petite',
 		'load more'=>'charger davantage',
+ 		'map'=>'Map',
     ];

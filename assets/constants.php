@@ -67,4 +67,5 @@
 	define('GOOGLE_IMG', '?hl='.LANGUAGE.SAFESEARCH_LEVEL.'&source=lnms&tbm=isch&q=');
 	define('GOOGLE_NEW', '?hl='.LANGUAGE.SAFESEARCH_LEVEL.'&source=lnms&tbm=nws&q=');
 	define('GOOGLE_VID', '?hl='.LANGUAGE.SAFESEARCH_LEVEL.'&source=lnms&tbm=vid&q=');
+	define('GOOGLE_MAP', 'https://www.google.fr/maps/place');
 //https://www.google.com/search?q=test&safe=off&hl=fr-fr&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjf5KH14fveAhUC1RoKHfEiAqQQ_AUIECgD
