@@ -2,6 +2,8 @@
 
 namespace Googol\Engine;
 
+use DOMDocument;
+use DOMXPath;
 use Googol\Engine;
 use Googol\Utils;
 
@@ -238,29 +240,75 @@ class Google extends Engine
         self::pagination($data['pages']);
     }
 
+    protected static function parse_web($page)
+    {
+        $doc = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $doc->loadHTML($page);
+        libxml_use_internal_errors();
+
+        $xpath = new DOMXpath($doc);
+        $elements = $xpath->query("//div[@id='main']/div");
+
+        $links = [];
+        $titles = [];
+        $descriptions = [];
+
+        if (false !== $elements) {
+            // On ignore les 3 premières div inutiles
+            for ($i = 3, $l = $elements->length; $i < $l; $i++) {
+                $el = $elements->item($i);
+                // On ne prend pas les div "séparatrices" vides
+                if ($el === null || !$el->hasChildNodes()) {
+                    continue;
+                }
+                $a = $el->firstChild->firstChild->firstChild;
+                // On ne prend pas les liens non liés à la recherche
+                if (null === $a || !$a->hasAttributes()) {
+                    continue;
+                }
+                $link = (string)$a->attributes->item(0)->nodeValue;
+                preg_match('#^\/url\?q=([^&]+).*$#', $link, $r);
+                $links[] = $r[1];
+                $a_children = $a->childNodes;
+                $titles[] = $a_children->item(0)->textContent;
+                $description = $el->firstChild->childNodes->item(2);
+                $descriptions[] = null === $description ? '' : $description->textContent;
+            }
+
+            return [
+                'link'        => $links,
+                'title'       => array_map('strip_tags', $titles),
+                'description' => array_map('strip_tags', $descriptions),
+            ];
+        }
+
+        return [
+            'links' => [], 'titles' => [], 'descriptions' => [],
+        ];
+    }
+
     public static function parsePage($page)
     {
         if (OFFLINE) {
             $page = file_get_contents(MODE.'_last_downloaded_page.html');
-        } else {
-            $page = preg_replace('#<!doctype html>|<html[^^]+?-->|<head>[^^]+?<\/head>|<body[^^]+?<div id="main">|<style>[^^]+?<\/style>|<script[^µ]+?<\/script>|<footer>[^µ]+?<\/body>#u','',$page);
-            if (DEBUG) {
-                file_put_contents(MODE.'_last_downloaded_page.html',$page);
-            }
+        } elseif (DEBUG) {
+            file_put_contents(MODE.'_last_downloaded_page.html',$page);
         }
 
         if (MODE === 'web') {
-            preg_match_all(self::$regexes['web'], $page, $data);
-            //preg_match_all($config['regex']['pages'],$page,$p);
-            $retour = [
-                'link'         => $data['link'],
-                'title'        => array_map('strip_tags', $data['title']),
-                'description'  => array_map('strip_tags', $data['description']),
-                'nb_pages'     => false,
-                'current_page' => START,
-                'query'        => QUERY_RAW,
-                'mode'         => MODE,
-            ];
+            preg_match_all(self::$regexes['pages'],$page,$p);
+            $p = count($p[0]);
+
+            $retour = array_merge(
+                self::parse_web($page),
+                [
+                    'nb_pages'     => $p,
+                    'current_page' => START,
+                    'query'        => QUERY_RAW,
+                    'mode'         => MODE,
+                ]
+            );
             $pages = false;
         } elseif (MODE === 'news') {
             preg_match_all(self::$regexes['news'],$page,$r);
@@ -271,8 +319,8 @@ class Google extends Engine
                 'description'  => array_map('strip_tags', $r['description']),
                 'link'         => array_map('strip_tags', $r['link']),
                 'thumbnail'    => $r['thumbnail'],
-                'current_page' => START,
                 'nb_pages'     => $p,
+                'current_page' => START,
                 'query'        => QUERY_RAW,
                 'mode'         => MODE,
             ];

@@ -114,8 +114,7 @@ session_start();
 		header em, .footerlogo em{
 			font-family: '<?php echo $selected_logo_fontfamily;?>'!important;
 			font-weight: initial;
-
-	}
+		}
 	</style>
 	<!--[if IE]><script> document.createElement("article");document.createElement("aside");document.createElement("section");document.createElement("footer");</script> <![endif]-->
 </head>

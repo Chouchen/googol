@@ -3,5 +3,9 @@
     "psr-4": {
       "Googol\\": "src/"
     }
+  },
+  "require": {
+    "ext-dom": "*",
+    "ext-libxml": "*"
   }
 }
